@@ -14,4 +14,4 @@ ACTION PLAN -
     3. Transform Data to 1NF and perform baseline/integration test.
     3. Perform step 3 for 2NF and 3NF.
     
-As a next step please go through "Sequence_Of_Actions.md" file in the "Source Code" folder where each step is in detailed explaination.
+## As a next step please go through "Sequence_Of_Actions.md" file in the "Source Code" folder where each step is in detailed explaination.
