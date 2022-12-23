@@ -69,3 +69,27 @@ trim(split_part(split_part(orgc_method, ',', 6), '=', 2)) as temperature,
 trim(split_part(split_part(orgc_method, ',', 7), '=', 2)) as treatment,
 orgc_date, orgc_dataset_id, orgc_profile_code
 from belgium_data_1)
+
+sql_query_12
+ALTER TABLE belgium_data_1NF ADD PRIMARY KEY (profile_layer_id);
+
+sql_query_13
+CREATE TABLE belgium_data_FACT AS
+(select "X", "Y", country_name, profile_id, MAX(profile_layer_id) profile_layer_id, 
+calculation, detection,	reaction, sample_pretreatment,	spectral,
+temperature, treatment,	orgc_date, orgc_dataset_id,	orgc_profile_code
+from belgium_data_1NF
+group by "X", "Y", country_name, profile_id, 
+calculation, detection,	reaction, sample_pretreatment,	spectral,
+temperature, treatment,	orgc_date, orgc_dataset_id,	orgc_profile_code)
+
+sql_query_14
+CREATE TABLE belgium_data_DIM AS
+(select profile_layer_id, upper_depth, lower_depth, layer_name, litter, orgc_value, orgc_value_avg
+from belgium_data_1NF)
+
+sql_query_15
+ALTER TABLE belgium_data_FACT ADD PRIMARY KEY (profile_layer_id);
+
+sql_query_16
+ALTER TABLE belgium_data_DIM ADD PRIMARY KEY (profile_layer_id);
