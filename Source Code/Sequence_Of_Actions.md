@@ -1,6 +1,6 @@
 SEQUENCE OF ACTIONS - 
 
-IMPORTANT NOTE - SQL queries performed in the process are present in ".sql" file in folder "". Queries named as 'sql_query_1', 'sql_query_2'.... and so on.
+IMPORTANT NOTE - SQL queries performed in the process are present in "Queries.md" file in folder "Source Code". Queries named as 'sql_query_1', 'sql_query_2'.... and so on.
 
 1. Import csv file to POSTGRE
    
