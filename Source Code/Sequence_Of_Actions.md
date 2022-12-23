@@ -1,8 +1,8 @@
-SEQUENCE OF ACTIONS - 
+# SEQUENCE OF ACTIONS - 
 
-IMPORTANT NOTE - SQL queries performed in the process are present in "Queries.md" file in folder "Source Code". Queries named as 'sql_query_1', 'sql_query_2'.... and so on.
+## IMPORTANT NOTE - SQL queries performed in the process are present in "Queries.md" file in folder "Source Code". Queries named as 'sql_query_1', 'sql_query_2'.... and so on.
 
-1. Import csv file to POSTGRE
+### 1. Import csv file to POSTGRE
    
     a. Run sql_query_1 and create table for the data -
     
@@ -27,7 +27,7 @@ IMPORTANT NOTE - SQL queries performed in the process are present in "Queries.md
     
     b. Import the data into the table "public.belgium_data".
     
-2. Observe the data. Few observations are - 
+### 2. Observe the data. Few observations are - 
    
    -> Contains over 4k records, that means easily managed by POSTGRE no Big data technology needed.
    -> Column 'profile_layer_id' is unique for every row and is made the PRIMARY KEY.
@@ -35,7 +35,7 @@ IMPORTANT NOTE - SQL queries performed in the process are present in "Queries.md
    -> orgc_date datatype needs to be changed to 'date' type so analytics can be performed smoothly.
    -> Column orgc_method needs to be further bifurgated into - 7 more columns - calculation,	detection,	reaction,	sample_pretreatment,	spectral,	temperature	             and treatment to achieve 1NF.
    
-3. Cleaning Data.
+### 3. Cleaning Data.
 
    a. Unwanted string from data like - "{", "{1:", "}", "2{" etc. needs to be removed. And Data type of 'orgc_date' changed to date type, so run below queries - 
    
@@ -76,7 +76,7 @@ IMPORTANT NOTE - SQL queries performed in the process are present in "Queries.md
     alter column orgc_date TYPE date using (orgc_date::date)
     
     
-4. Now to convert the table into 1NF, column'orgc_method needs to be bifurgated by using below query - 
+### 4. Now to convert the table into 1NF, column'orgc_method needs to be bifurgated by using below query - 
 
     sql_query_11: 
     CREATE TABLE belgium_data_1NF AS
@@ -96,7 +96,7 @@ IMPORTANT NOTE - SQL queries performed in the process are present in "Queries.md
     ALTER TABLE belgium_data_1NF ADD PRIMARY KEY (profile_layer_id);
     
     
-5. Test our new Data.
+### 5. Test our new Data.
 
 IMPORTANT NOTE - Since the below queries are performed randomly as the data needs so no query naming like sql_query_1 is done.
 
@@ -118,13 +118,13 @@ IMPORTANT NOTE - Since the below queries are performed randomly as the data need
     Also, there were tests performed to make sure that the columns - orgc_date and orgc_method were handled without any data being lost.
     
     
-6. Converting Data into 2NF.
+### 6. Converting Data into 2NF.
 
     Precisley the data is doesn't violates the condition of 2NF since there was not much proof for the partial dependency of non-primary columns.
     So, the table "belgium_data_1NF" was declared in second normal form.
     Also, every column could be retrieved using the primary key - 'profile_layer_id'.
     
-7. Converting Data to 3NF.
+### 7. Converting Data to 3NF.
 
 
     Observations - 
