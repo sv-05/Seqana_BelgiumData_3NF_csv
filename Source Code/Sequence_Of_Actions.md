@@ -31,9 +31,9 @@
    
    -> Contains over 4k records, that means easily managed by POSTGRE no Big data technology needed.
    -> Column 'profile_layer_id' is unique for every row and is made the PRIMARY KEY.
-   -> Batch patterns can be observed for columns - 'X', 'Y', 'profile_id', 'upper_depth', 'lower_depth', 'orgc_date' in parellel that all records changes as upperdepth       and lower depth's range ends.
-   -> orgc_date datatype needs to be changed to 'date' type so analytics can be performed smoothly.
-   -> Column orgc_method needs to be further bifurgated into - 7 more columns - calculation,	detection,	reaction,	sample_pretreatment,	spectral,	temperature	             and treatment to achieve 1NF.
+   -> Batch patterns can be observed for columns - 'X', 'Y', 'profile_id', 'upper_depth', 'lower_depth', 'orgc_date' in parellel that all records changes as   'upper_depth' and 'lower_depth''s range ends.
+   -> 'orgc_date' datatype needs to be changed to 'date' type so analytics can be performed smoothly.
+   -> Column 'orgc_method' needs to be further bifurgated into - 7 more columns - calculation,	detection,	reaction,	sample_pretreatment,	spectral,	temperature	             and treatment to achieve 1NF.
    
 ### 3. Cleaning Data.
 
@@ -127,15 +127,20 @@ IMPORTANT NOTE - Since the below queries are performed randomly as the data need
 ### 7. Converting Data to 3NF.
 
 
-    Observations - 
+   #### Observations - 
     -> Columns x, y, country, orgc_method, orgc_date, orgc_dataset_id, orgc_profile_code contains same records for each 'profile_id'. When checked these columns with a        GROUP BY then all records were same for each profile_id.
+    
     -> On the second hand, Columns upper_depth, lower_depth, layer_name, litter, orgc_value, orgc_avg contains different records for each 'profile_layer_id'. And for          each 'profile_layer_id' we have a unique record for 'profile_id' in different table.
     
     Therefore, two tables have been made - 
     
-    a. belgium_data_FACT - Includes columns - "X", "Y", country_name, profile_id, MAX(profile_layer_id) AS profile_layer_id, 
-       calculation, detection, reaction, sample_pretreatment, spectral, temperature, treatment, orgc_date, orgc_dataset_id, orgc_profile_code as a Fact Table.
-    b. belgium_data_FACT - Includes columns - profile_layer_id, upper_depth, lower_depth, layer_name, litter, orgc_value, orgc_value_avg as a Dimention Table.
+   #### belgium_data_FACT - 
+   
+        Includes columns - "X", "Y", country_name, profile_id, MAX(profile_layer_id) AS profile_layer_id, 
+        calculation, detection, reaction, sample_pretreatment, spectral, temperature, treatment, orgc_date, orgc_dataset_id, orgc_profile_code as a Fact Table.
+   #### belgium_data_FACT -
+   
+        Includes columns - profile_layer_id, upper_depth, lower_depth, layer_name, litter, orgc_value, orgc_value_avg as a Dimention Table.
     
     Queries used - 
     
@@ -159,4 +164,7 @@ IMPORTANT NOTE - Since the below queries are performed randomly as the data need
 
       sql_query_16: 
       ALTER TABLE belgium_data_DIM ADD PRIMARY KEY (profile_layer_id);
+      
+      
+#### Now, our database with belgium_data_FACT and belgium_data_DIM are ready for further Data Analytics.
     
