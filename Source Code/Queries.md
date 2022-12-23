@@ -1,4 +1,5 @@
 sql_query_1
+
 CREATE TABLE public.belgium_data
 (
     "X" numeric,
@@ -21,42 +22,52 @@ CREATE TABLE public.belgium_data
 
 
 sql_query_2
+
 update belgium_data_1
 set orgc_value = replace(orgc_value, '{', '')
 
 sql_query_3
+
 update belgium_data_1
 set orgc_value = replace(orgc_value, '}', '')
 
 sql_query_4
+
 update belgium_data_1
 set orgc_method = replace(orgc_method, '{1:', '')
 
 sql_query_5
+
 update belgium_data_1
 set orgc_method = replace(orgc_method, '}', '')
 
 sql_query_6
+
 update belgium_data_1
 set orgc_date = replace(orgc_date, '{1:', '')
 
 sql_query_7
+
 update belgium_data_1
 set orgc_date = substring(orgc_date, '{2:', '')
 
 sql_query_8
+
 update belgium_data_1
 set orgc_date = replace(orgc_date, '}', '')
 
 sql_query_9
+
 update belgium_data_1
 set orgc_date = REPLACE(orgc_date, (SUBSTRING(orgc_date, POSITION(',2:' IN orgc_date))), '') where orgc_date like '%,2:%'
 
 sql_query_10
+
 alter table belgium_data_1
 alter column orgc_date TYPE date using (orgc_date::date)
 
 sql_query_11
+
 CREATE TABLE belgium_data_1NF AS
 (SELECT "X", "Y", profile_id, profile_layer_id, country_name, upper_depth, lower_depth, layer_name, litter, orgc_value,
 orgc_value_avg, 
@@ -71,9 +82,11 @@ orgc_date, orgc_dataset_id, orgc_profile_code
 from belgium_data_1)
 
 sql_query_12
+
 ALTER TABLE belgium_data_1NF ADD PRIMARY KEY (profile_layer_id);
 
 sql_query_13
+
 CREATE TABLE belgium_data_FACT AS
 (select "X", "Y", country_name, profile_id, MAX(profile_layer_id) profile_layer_id, 
 calculation, detection,	reaction, sample_pretreatment,	spectral,
@@ -84,12 +97,15 @@ calculation, detection,	reaction, sample_pretreatment,	spectral,
 temperature, treatment,	orgc_date, orgc_dataset_id,	orgc_profile_code)
 
 sql_query_14
+
 CREATE TABLE belgium_data_DIM AS
 (select profile_layer_id, upper_depth, lower_depth, layer_name, litter, orgc_value, orgc_value_avg
 from belgium_data_1NF)
 
 sql_query_15
+
 ALTER TABLE belgium_data_FACT ADD PRIMARY KEY (profile_layer_id);
 
 sql_query_16
+
 ALTER TABLE belgium_data_DIM ADD PRIMARY KEY (profile_layer_id);
